@@ -1,0 +1,35 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main ()
+{
+    int char_counter[150];
+    char path[1000] ;
+    gets(path);
+    FILE *pFILE;
+    char paragraph[10000];
+    pFILE = fopen(path,"r");
+
+    if (pFILE != NULL)
+    {
+        while(!(feof(pFILE)))
+        {
+            fgets(paragraph,10000,pFILE);
+        }
+    }
+
+    int i = 0;
+
+    for(i = 0;i < 150;i++)
+        char_counter[i] = 0;
+
+    for(i = 0;i < 150;i++)
+        char_counter[paragraph[i]]++;
+
+    for(i = 0;i < 150;i++)
+    {
+        if(char_counter[i] != 0)
+	    printf("%c occurency = %d",i,char_counter[i]);    	
+    }
+}

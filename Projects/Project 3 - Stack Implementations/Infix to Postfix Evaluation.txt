@@ -1,0 +1,219 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int tos = -1;
+int tos2 = -1;
+
+char input[100];
+int size1 = strlen(input);
+
+int size2 = size1+5;
+char output[size2];
+char operator[size2];
+
+int result_s[100];
+
+int is_empty(char string[], int maximum_size)
+{
+    if (tos < 0 || string[0] == NULL) return 1;
+    else return 0;
+}
+
+void push(char string[] , char element)
+{
+    tos++;
+    string[tos] = element;
+    return;
+}
+
+char pop(char string[])
+{
+    char element;
+    element = array[tos];
+    string[tos] = NULL;
+    tos--;
+    return element;
+}
+
+void infix_to_postfix(char string[])
+{
+    int i = 0;
+    int j = 0;
+    
+    while (i != size1)
+    {
+        if (string[i] >= '0' && string[i] <= '9')
+        {
+            output[j] = string[i];
+            j++;
+            i++;
+            continue;  
+        } 
+        
+        else switch(string[i])
+        {
+            case '(':case '+': case '-': case '*': case '/':
+                while ( !is_empty(operator , size2) && strchr (string[i] , "+-") != NULL && strchr(operator[tos] , "*/" != NULL) )
+                    {
+                        if ( strchr(operator[tos] , "(" != NULL) )    break;
+                        
+                        output[j] = pop(operator);
+                        j++; 
+                    }
+                push(operator,string[i]);
+                i++;
+                continue;
+            
+            case ')':
+                while (!isempty(operator , size2))
+                {
+                    output[j] = pop(operator,size2);
+                    j++;
+                    
+                    if ( strchr(operator[tos] , "(" != NULL) )
+                    {
+                        pop(operator,size2);
+                        continue;
+                    }
+                }
+        }
+    }
+
+    while (!isempty(operator , size2))
+    {
+        if ( strchr(operator[tos] , "(" != NULL) )    pop(operator,size2);
+
+        else
+        {
+            output[j] = pop(operator,size2);
+            j++;
+        }        
+    }
+}
+
+void push_to_result(int array[], int number)
+{
+    tos2++;
+    array[tos] = number;
+    return;
+}
+
+void pop_from_result(int array[])
+{
+    int element;
+    element = array[tos];
+    array[tos] = 0;
+    tos--;
+    return element;
+}
+
+int evaluate_postfix(char string[])
+{
+    int operand1;
+    int operand2;
+
+    int temp_result = 0;
+
+    int i = 0;
+
+    while(i != size2)
+    {
+        if (string[i] >= '0' && string[i] <= '9')
+        {
+            push_to_result(result_s,0);
+            i++;
+            continue;  
+        }
+
+        switch(string[i])
+        {
+            case '0':
+                push_to_result(result_s,0);
+                i++;
+                continue;
+            case '1':
+                push_to_result(result_s,1);
+                i++;
+                continue;
+            case '2':
+                push_to_result(result_s,2);
+                i++;
+                continue;
+            case '3':
+                push_to_result(result_s,3);
+                i++;
+                continue;
+            case '4':
+                push_to_result(result_s,4);
+                i++;
+                continue;
+            case '5':
+                push_to_result(result_s,5);
+                i++;
+                continue;
+            case '6':
+                push_to_result(result_s,6);
+                i++;
+                continue;
+            case '7':
+                push_to_result(result_s,7);
+                i++;
+                continue;
+            case '8':
+                push_to_result(result_s,8);
+                i++;
+                continue;
+            case '9':
+                push_to_result(result_s,9);
+                i++;
+                continue;
+            case '+':
+                operand2 = pop_from_result(result_s);
+                operand1 = pop_from_result(result_s);
+                temp_result = operand1 + operand2;
+                push_to_result(result_s,temp_result);
+                i++;
+                continue;
+            case '-':
+                operand2 = pop_from_result(result_s);
+                operand1 = pop_from_result(result_s);
+                temp_result = operand1 - operand2;
+                push_to_result(result_s,temp_result);
+                i++;
+                continue;
+            case '*':
+                operand2 = pop_from_result(result_s);
+                operand1 = pop_from_result(result_s);
+                temp_result = operand1 * operand2;
+                push_to_result(result_s,temp_result);
+                i++;
+                continue;
+            case '/';
+                operand2 = pop_from_result(result_s);
+                operand1 = pop_from_result(result_s);
+                temp_result = operand1 / operand2;
+                push_to_result(result_s,temp_result);
+                i++;
+                continue;
+        }
+    }
+
+    return temp_result;
+}
+
+int main()
+{
+    int result;
+    
+    puts("Infix to Postfix Evaluation Program :");
+    puts("--------------------------------------\n");
+    
+    printf("Enter Mathematical Expression : ");
+    gets(input);
+    
+    infix_to_postfix(input);
+    
+    result = evaluate_postfix(output);
+    printf("\nResult = %d", result);
+}

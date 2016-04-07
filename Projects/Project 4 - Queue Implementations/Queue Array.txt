@@ -1,0 +1,99 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int front = 0 , rear = 0 , counter = 0;
+
+void enqueue(int array[], int size, int number)
+{
+	if ( front == (rear + 1) || ((rear == size-1) && (front == 0)) )	puts("ERROR QUEUE is FULL!");
+	else
+	{
+		array[rear] = number;
+        printf("Enqueued Successfully!");
+
+		if(rear == size-1)
+		{
+			rear = 0;
+			return;
+		}
+		else
+		{
+			rear++;
+			return;
+		}
+	}
+}
+
+void dequeue(int array[])
+{
+	if (front == rear)    puts("ERROR QUEUE is Empty!");
+	else
+	{
+		printf("%d Dequeued Successfully!", array[front]);
+		array[front] = 0;
+		front++;
+		counter--;
+		return;
+	}
+}
+
+void display(int array[], int size)
+{
+	int i;
+	for(i = 0 ; i < size ; i++)
+	{
+		if (i == front)    printf("(Front)");
+		else if (i == rear)    printf("(Rear)");
+		printf("|%d|---", array[i]);
+	}
+	puts("|||");
+}
+
+int main()
+{
+	int size;
+	printf("Enter Queue Size : ");
+	scanf("%d",&size);
+	int array[size]; int i; for(i = 0 ; i < size ; i++) array[i] = 0;
+
+    int number;
+
+	int operation;
+
+	puts("Queue Implementation Test :");
+    puts("---------------------------------\n");
+    puts("Select Operation :");
+    puts("1 - Enqueue");
+    puts("2 - Dequeue");
+    puts("3 - Display");
+    puts("4 - Retrieve Queue Used Size");
+
+    while (1)
+    {
+        printf("\nSelect Operation : ");
+        scanf("%d", &operation);
+        switch (operation)
+        {
+        case 1:
+        	printf("Enter Number to Enqueue : ");
+        	scanf("%d",&number);
+        	enqueue(array,size,number);
+        	break;
+        case 2:
+        	dequeue(array);
+        	break;
+        case 3:
+        	display(array,size);
+        	break;
+        case 4:
+        	printf("Used Size in Queue = %d\n", counter);
+        	break;
+        default:
+        	puts("ERROR Invalid Operation!");
+        	break;
+        }
+    }
+
+}
+

@@ -1,0 +1,135 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int top_of_stack = -1;
+
+int is_full(int array[], int maximum_size)
+{
+    if (top_of_stack >= maximum_size) return 1;
+    else return 0;
+}
+
+int is_empty(int array[], int maximum_size)
+{
+    if (top_of_stack < 0 || array[0] == 0) return 1;
+    else return 0;
+}
+
+int used_size(int array[], int maximum_size)
+{
+    if (top_of_stack < 0 || array[0] == 0) puts("Stack is Empty!");
+    else
+    {
+        return top_of_stack + 1;
+    }
+}
+
+void push(int array[] , int maximum_size , int number)
+{
+    if (is_full(array,maximum_size))
+    {
+        puts("ERROR Stack is FULL!");
+        return;
+    }
+
+    else
+    {
+        top_of_stack++;
+        array[top_of_stack] = number;
+        return;
+    }
+}
+
+int pop(int array[] , int maximum_size)
+{
+    int element;
+
+    if (is_empty(array,maximum_size))
+    {
+        puts("ERROR Stack is Empty!");
+        return;
+    }
+
+    else
+    {
+        element = array[top_of_stack];
+        array[top_of_stack] = 0;
+        top_of_stack--;
+        return element;
+    }
+}
+
+void display(int array[] , int maximum_size)
+{
+    int i = top_of_stack;
+    int element;
+
+    if (is_empty(array,maximum_size))
+    {
+        puts("Stack is Empty!");
+        return;
+    }
+
+    else
+    {
+        puts("| |");
+        while (i >= 0)
+        {
+            element = array[i];
+            printf("|%d|\n",element);
+            puts("---");
+            i--;
+        }
+        return;
+    }
+}
+
+int main()
+{
+    int operation;
+
+    int maximum_size;
+
+    int number;
+
+    printf("Enter Stack Maximum Size : ");
+    scanf("%d",&maximum_size);
+
+    int stack[maximum_size];
+    int i;
+    for(i = 0 ; i < maximum_size ; i++) stack[i] = 0;
+
+    puts("Stack Implementation using Array Test :");
+    puts("---------------------------------\n");
+    puts("Select Operation :");
+    puts("1 - Push");
+    puts("2 - Pop");
+    puts("3 - Display");
+    puts("4 - Retrieve Used Size");
+
+    while (1)
+    {
+        printf("\nSelect Operation : ");
+        scanf("%d", &operation);
+        switch (operation)
+        {
+        case 1:
+            printf("Enter Number to push : ");
+            scanf("%d",&number);
+            push(stack,maximum_size,number);
+            break;
+        case 2:
+            pop(stack,maximum_size);
+            break;
+        case 3:
+            display(stack,maximum_size);
+            break;
+        case 4:
+            printf("Used size in stack : %d",used_size(stack,maximum_size));
+            break;
+        default:
+            printf("\n ERROR Invalid Selection");
+        }
+    }
+}

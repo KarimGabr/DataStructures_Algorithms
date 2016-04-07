@@ -1,0 +1,814 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct Node {int Data;struct Node *Next;}  *Tail , *current_pointer , *previous_pointer ,*temp, *temp1 , *temp2 , *temp3;
+struct Node *Head  = NULL;
+struct Node *Head2 = NULL;
+
+int is_Circular = 0;
+int list_size = 0 , list2_size = 0;
+
+int List_size()
+{
+    current_pointer = Head;
+
+    while (current_pointer != NULL)
+    {
+        current_pointer = current_pointer -> Next;
+        list_size++;
+    }
+
+    return(list_size);
+}
+
+void insert_at_head(int number)
+{
+    temp = (struct Node*)malloc(sizeof(struct Node));
+    temp -> Data = number;
+    if (Head == NULL)
+    {
+        Head = temp;
+        Head -> Next = NULL;
+        puts("Inserted Successfully");
+    }
+
+    else
+    {
+        temp -> Next = Head;
+        Head = temp;
+        puts("Inserted Successfully");
+    }
+    list_size++;
+}
+
+void insert_at_tail(int number)
+{
+    temp = (struct Node*)malloc(sizeof(struct Node));
+    temp -> Data = number;
+
+    if (Head == NULL)
+    {
+        Head = temp;
+        Head -> Next = Head;
+        puts("Inserted Successfully");
+    }
+    
+    else
+    {
+        current_pointer = Head;
+        while (current_pointer -> Next != NULL)
+            current_pointer = current_pointer -> Next;
+
+        current_pointer -> Next = temp;
+        temp -> Next = NULL;
+
+        puts("Inserted Successfully");
+        list_size++;
+    }
+    
+}
+
+void insert_at_index(int number, int location)
+{
+    int i;
+    temp = (struct Node*)malloc((sizeof(struct Node)));
+    temp -> Data = number;
+    struct Node * current_pointerr = Head;
+    struct Node * previous_pointerr;
+
+    if (location > list_size+1 || location <= 0)
+        puts("ERROR 1 insertion not possibe location is out of Range");
+
+    else
+    {
+        for (i = 1 ; i<location ; i++)
+        {
+            previous_pointerr = current_pointerr;
+            current_pointerr = current_pointerr -> Next;
+        }
+        previous_pointerr -> Next = temp;
+        temp -> Next = current_pointerr;
+
+        puts("Inserted Successfully");
+        list_size++;
+    }
+}
+
+void delete_head()
+{
+    list_size--;
+
+    current_pointer = Head;
+
+    if (list_size == 0)
+    {
+        free(current_pointer);
+        Head = NULL;
+        puts("Deleted Successfully");
+        puts("List is now EMPTY");
+    }
+
+    else
+    {
+        Head = current_pointer -> Next;
+        free(current_pointer);
+        puts("Deleted Successfully");
+    }
+}
+
+void delete_tail()
+{
+    list_size--;
+
+    current_pointer = Head;
+
+    if (list_size == 0)
+    {
+        free(current_pointer);
+        Head = NULL;
+        puts("Deleted Successfully");
+        puts("List is now EMPTY");
+    }
+
+    else
+    {
+        while (current_pointer -> Next != NULL)
+        {
+            previous_pointer = current_pointer;
+            current_pointer = current_pointer -> Next;
+        }
+        previous_pointer -> Next = NULL;
+        free(current_pointer);
+        puts("Deleted Successfully");
+    }
+}
+
+void delete_with_location(int location)
+{
+    if (location > list_size+1 || location <= 0)
+        puts("ERROR 1 insertion not possibe location is out of Range");
+    
+    else
+    {
+        list_size--;
+
+        int i;
+
+        current_pointer = Head;
+
+        for (i = 1 ; i<location ; i++)
+        {
+            previous_pointer = current_pointer;
+            current_pointer = current_pointer -> Next;
+        }
+        
+        previous_pointer -> Next = current_pointer -> Next;
+        free(current_pointer);
+        puts("Deleted Successfully");
+    }
+}
+
+void delete_with_data(int number)
+{
+    if (Head == NULL)
+    {
+        puts("List is Already Empty!");
+        return;
+    }
+
+    current_pointer = Head;
+
+    if (Head -> Data == number)
+        delete_head();
+
+    else
+    {
+        while (current_pointer -> Next != NULL)
+        {
+            previous_pointer = current_pointer;
+            current_pointer = current_pointer -> Next;
+
+            if(current_pointer -> Data == number)
+            {
+                list_size--;
+                previous_pointer -> Next = current_pointer -> Next;
+                free(current_pointer);
+                puts("Deleted Successfully");
+                return;
+            }
+        }
+
+        if(current_pointer -> Data == number)
+        {    
+            list_size--;
+            previous_pointer -> Next = current_pointer -> Next;
+            free(current_pointer);
+            puts("Deleted Successfully");
+            return;
+        }
+
+        printf("\n ERROR : %d not found in list", number);
+    }
+}
+
+
+void display_list()
+{
+    current_pointer = Head;
+
+    if (current_pointer == NULL)
+        puts("List is EMPTY");
+
+    else
+    {
+        puts("Elements in the List :");
+
+        while (current_pointer != NULL)
+        {
+            printf("%d -> %d\n", current_pointer, current_pointer -> Data);
+            current_pointer = current_pointer -> Next;
+        }
+    }
+}
+
+void display_circular__list()
+{
+    current_pointer = Head;
+
+    if (current_pointer == NULL)
+        puts("List is EMPTY");
+
+    else
+    {
+        puts("Elements in the List :");
+
+        do
+        {
+            printf("%d -> %d\n", current_pointer, current_pointer -> Data);
+            current_pointer = current_pointer -> Next;
+        }while (current_pointer  != Head);
+    }
+}
+
+void display_node(int location)
+{
+    if (location > list_size+1 || location <= 0)
+        puts("ERROR 1 insertion not possibe location is out of Range");
+    else
+    {
+        int i;
+
+        current_pointer = Head;
+
+        for (i = 1 ; i<location ; i++)
+            current_pointer = current_pointer -> Next;
+        printf(" = %d",current_pointer -> Data);
+    }
+}
+
+void update_node(int number,int location)
+{
+    if (location > list_size+1 || location <= 0)
+        puts("ERROR 1 insertion not possibe location is out of Range");
+
+    else
+    {
+        int i;
+
+        current_pointer = Head;
+
+        for (i = 1 ; i<location ; i++)
+            current_pointer = current_pointer -> Next;
+        current_pointer -> Data = number;
+        puts("Updateded Successfully");
+    }
+}
+
+void search(int number)
+{
+    int counter = 0;
+    int data_occurence = 0;
+
+    current_pointer = Head;
+
+    if (current_pointer == NULL)
+        puts("\n ERROR List empty to search for data");
+
+    while (current_pointer != NULL)
+    {
+        if (current_pointer -> Data == number)
+        {
+            printf("\nData found in position %d",counter + 1);
+            data_occurence++;
+        }
+        current_pointer = current_pointer -> Next;
+        counter++;
+    }
+    
+    if(data_occurence == 0) printf("\n ERROR : %d not found in list", number);
+}
+
+void sort()
+{
+    int x;
+
+    temp1 = Head;
+    temp2 = Head;
+
+    for (temp1 = Head; temp1 != NULL; temp1 = temp1 -> Next)
+    {
+        for (temp2 = temp1 -> Next; temp2 != NULL; temp2 = temp2 -> Next)
+        {
+            if (temp1 -> Data > temp2 -> Data)
+            {
+                x = temp1 -> Data;
+                temp1 -> Data = temp2 -> Data;
+                temp2 -> Data = x;
+            }
+        }
+    }
+    puts("Sorted Successfully");
+}
+
+void inverse()
+{
+    current_pointer = Head;
+    while (current_pointer -> Next != NULL)
+    {
+        temp1 = current_pointer;
+        temp2 = temp1 -> Next;
+        if (current_pointer == Head)
+            current_pointer -> Next = NULL;
+        else if(current_pointer != Head)
+            current_pointer -> Next = temp3;
+        temp3 = temp1;
+        current_pointer = temp2;
+    }
+    current_pointer -> Next = temp3;
+    Head = current_pointer;
+    puts("Inverted Successfully");
+}
+
+void turn_into_circular()
+{
+    is_Circular = 1;
+    current_pointer = Head;
+
+    while (current_pointer -> Next != NULL)
+        current_pointer = current_pointer -> Next;
+    current_pointer -> Next = Head;
+    Tail = current_pointer;
+    puts("Circularied Successfully");
+}
+
+void insert_at_head_circular(int number)
+{
+    temp = (struct Node*)malloc(sizeof(struct Node));
+    temp -> Data = number;
+
+    if (Head == NULL)
+    {
+        Head = temp;
+        Head -> Next = Head;
+        puts("Inserted Successfully");
+    }
+
+    else
+    {
+        temp -> Next = Head;
+
+        current_pointer = Head;
+        while (current_pointer -> Next != Head)
+            current_pointer = current_pointer -> Next;
+        current_pointer -> Next = temp;
+        Head = temp;
+        puts("Inserted Successfully");
+    }
+    list_size++;
+}
+
+void insert_at_tail_circular(int number)
+{
+    temp = (struct Node*)malloc(sizeof(struct Node));
+    temp -> Data = number;
+
+    if (Head == NULL)
+    {
+        Head = temp;
+        Head -> Next = Head;
+        puts("Inserted Successfully");
+    }
+
+    current_pointer = Head;
+    while (current_pointer -> Next != Head)
+        current_pointer = current_pointer -> Next;
+
+    current_pointer -> Next = temp;
+    temp -> Next = Head;
+
+    puts("Inserted Successfully");
+    list_size++;
+}
+
+void delete_head_from_circular()
+{
+    if (Head == NULL)
+    {
+        puts("List is Already Empty!");
+        return;
+    }
+
+    list_size--;
+
+    current_pointer = Head;
+
+    if (list_size == 0)
+    {
+        free(current_pointer);
+        Head = NULL;
+        puts("Deleted Successfully");
+        puts("List is now EMPTY");
+    }
+
+    else
+    {
+        while (current_pointer -> Next != Head)
+            current_pointer = current_pointer -> Next;
+    
+        current_pointer -> Next = Head -> Next;
+    
+        struct Node * x =  Head;
+        Head = Head -> Next;
+        free(x);
+        puts("Deleted Successfully");    
+    }
+}
+
+void delete_tail_from_circular()
+{
+    if (Head == NULL)
+    {
+        puts("List is Already Empty!");
+        return;
+    }
+
+    list_size--;
+
+    current_pointer = Head;
+    
+    if (list_size == 0)
+    {
+        free(current_pointer);
+        Head = NULL;
+        puts("Deleted Successfully");
+        puts("List is now EMPTY");
+    }
+
+    else
+    {
+        while (current_pointer -> Next != Head)
+        {
+            previous_pointer = current_pointer;
+            current_pointer = current_pointer -> Next;
+        }
+
+        previous_pointer -> Next = Head;
+        free(current_pointer);
+        puts("Deleted Successfully");
+    }
+}
+
+void delete_from_circular_using_data(int number)
+{
+    if (Head == NULL)
+    {
+        puts("List is Already Empty!");
+        return;
+    }
+
+    current_pointer = Head;
+
+    if (Head -> Data == number)
+    {
+        list_size--;
+        delete_head_from_circular();
+    }
+
+
+    else
+    {
+        while (current_pointer -> Next != Head)
+        {
+            previous_pointer = current_pointer;
+            current_pointer = current_pointer -> Next;
+
+            if(current_pointer -> Data == number)
+            {
+                list_size--;
+                previous_pointer -> Next = current_pointer -> Next;
+                free(current_pointer);
+                puts("Deleted Successfully");
+                return;
+            }
+        }
+
+        if(current_pointer -> Data == number)
+        {    
+            list_size--;
+            previous_pointer -> Next = current_pointer -> Next;
+            free(current_pointer);
+            puts("Deleted Successfully");
+            return;
+        }
+
+        printf("\n ERROR : %d not found in list", number);
+    }
+}
+
+void add_to_list2_at_head(int number)
+{
+
+    list2_size++;
+
+    puts("Create new list to append");
+    temp = (struct Node*)malloc(sizeof(struct Node));
+    temp -> Data = number;
+    
+    if (Head2 == NULL)
+    {
+        Head2 = temp;
+        Head2 -> Next = NULL;
+        puts("Inserted Successfully");
+    }
+
+    else
+    {
+        temp -> Next = Head2;
+        Head2 = temp;
+        puts("Inserted Successfully");
+    }
+}
+
+void add_to_list2_at_tail(int number)
+{
+
+    list2_size++;
+
+    temp = (struct Node*)malloc(sizeof(struct Node));
+    temp -> Data = number;
+
+    current_pointer = Head2;
+    while (current_pointer -> Next != NULL)
+        current_pointer = current_pointer -> Next;
+
+    current_pointer -> Next = temp;
+    temp -> Next = NULL;
+
+    puts("Inserted Successfully");
+}
+
+void concatenate()
+{
+    current_pointer = Head;
+    while (current_pointer -> Next != NULL)
+        current_pointer = current_pointer -> Next;
+
+    current_pointer -> Next = Head2;
+}
+
+void merge(*Node Head, *Node Head2)
+{
+    struct Node * ccurrent_pointer , ccurrent_pointer2 , pprevious_pointer , ttail1 , ttail2;
+
+    ccurrent_pointer = Head;
+    while (ccurrent_pointer -> Next != NULL)
+        ccurrent_pointer = ccurrent_pointer -> Next;
+    ttail1 = ccurrent_pointer;
+
+    ccurrent_pointer = Head2;
+    while (ccurrent_pointer -> Next != NULL)
+        ccurrent_pointer = ccurrent_pointer -> Next;
+    ttail2 = ccurrent_pointer;
+
+    if (ttail1 < Head2)  
+    {
+        ttail1 -> Next = Head2;
+        return;
+    }
+
+    else if (ttail2 < Head)
+    {
+        ttail2 -> Next = Head;
+        return;
+    }
+
+    else
+    {
+        if (list_size < list2_size)
+        {
+            k : for (ccurrent_pointer = Head ; ccurrent_pointer != NULL ; ccurrent_pointer = ccurrent_pointer -> Next)
+            {
+                for (ccurrent_pointer2 = Head2 ; ccurrent_pointer2 != NULL ; ccurrent_pointer2 = ccurrent_pointer2 -> Next)
+                {
+                    pprevious_pointer = ccurrent_pointer2;
+                    ccurrent_pointer2 = ccurrent_pointer2 -> Next;
+
+                    if (ccurrent_pointer == ccurrent_pointer2)
+                    {
+                        Head = ccurrent_pointer -> Next;
+                        free(ccurrent_pointer);
+                        
+                        goto k;
+                    }
+
+                    else if (ccurrent_pointer < ccurrent_pointer2)
+                    {
+                        Head = ccurrent_pointer -> Next;
+
+                        pprevious_pointer -> Next = ccurrent_pointer;
+                        ccurrent_pointer -> Next = ccurrent_pointer2;
+                        
+                        goto k;
+                    }
+                }
+            }
+        }
+
+        else if (list2_size < list1_size)
+        {
+            m : for (ccurrent_pointer2 = Head2 ; ccurrent_pointer2 != NULL ; ccurrent_pointer2 = ccurrent_pointer2 -> Next)
+            {
+                for (cccurrent_pointer = Head ; cccurrent_pointer != NULL ; ccurrent_pointer = ccurrent_pointer -> Next)
+                {
+                    pprevious_pointer = ccurrent_pointer;
+                    ccurrent_pointer = ccurrent_pointer -> Next;
+
+                    if (ccurrent_pointer2 == ccurrent_pointer)
+                    {
+                        Head = ccurrent_pointer2 -> Next;
+                        free(ccurrent2_pointer);
+                        
+                        goto m;
+                    }
+
+                    else if (ccurrent_pointer2 < ccurrent_pointer)
+                    {
+                        Head = ccurrent_pointer2 -> Next;
+
+                        pprevious_pointer -> Next = ccurrent_pointer2;
+                        ccurrent_pointer2 -> Next = ccurrent_pointer;
+                        
+                        goto m;
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+int main()
+{
+    int operation;
+    int number;
+    int location;
+
+    puts("Single Linked List Implementation Test :");
+    puts("---------------------------------\n");
+    puts("Select Operation :");
+    puts("1 - Create Head1 / Insert at Head");
+    puts("2 - Insert at Tail");
+    puts("3 - Insert at Index");
+    puts("4 - Delete Head");
+    puts("5 - Delete Tail");
+    puts("6 - Delete with Index");
+    puts("7 - Delete with Data");
+    puts("8 - Update Data");
+    puts("9 - Search for Data");
+    puts("10 - Sort List");
+    puts("11 - Inverse List");
+    puts("12 - Display List");
+    puts("13 - Display Node");
+    puts("14 - Retrieve List length");
+    puts("15 - Add Circularity property");
+    puts("16 - Create List2 / Insert at Head2");
+    puts("17 - Insert at Tail2 ");
+    puts("18 - Concatenate 2 Lists");
+    puts("19 - Merge 2 Sorted Lists");
+
+    while (1)
+    {
+        printf("\nSelect Operation : ");
+        scanf("%d", &operation);
+        switch (operation)
+        {
+        case 1:
+            printf("\nEnter Data to insert at head : ");
+            scanf("%d",&number);
+            if(is_Circular == 0)
+                insert_at_head(number);
+            else if(is_Circular == 1)
+                insert_at_head_circular(number);
+            break;
+        case 2:
+            printf("\nEnter Data to insert at tail : ");
+            scanf("%d",&number);
+            if(is_Circular == 0)
+                insert_at_tail(number);
+            else if(is_Circular == 1)
+                insert_at_tail_circular(number);
+            break;
+        case 3:
+            printf("\nEnter Data : ");
+            scanf("%d",&number);
+            printf("\nEnter Location : ");
+            scanf("%d",&location);
+            insert_at_index(number,location);
+            break;
+        case 4:
+            if(is_Circular == 0)
+                delete_head(number);
+            else if(is_Circular == 1)
+                delete_head_from_circular(number);
+            break;
+        case 5:
+            if(is_Circular == 0)
+                delete_tail(number);
+            else if(is_Circular == 1)
+                delete_tail_from_circular(number);
+            break;
+        case 6:
+            printf("\nEnter Location : ");
+            scanf("%d",&location);
+            delete_with_location(location);
+            break;
+        case 7:
+            printf("\nEnter Data : ");
+            scanf("%d",&number);
+            if(is_Circular == 0)
+                delete_with_data(number);
+            else if(is_Circular == 1)
+                delete_from_circular_using_data(number);
+            break;
+        case 8:
+            printf("Enter Location : ");
+            scanf("%d",&location);
+            printf("\nEnter New Data : ");
+            scanf("%d",&number);
+            update_node(number,location);
+            break;
+        case 9:
+            printf("Enter Data to search : ");
+            scanf("%d",&number);
+            search(number);
+            break;
+        case 10:
+            sort();
+            break;
+        case 11:
+            inverse();
+            break;
+        case 12:
+            if (list_size == 0)
+                puts("The List is Empty");
+            else
+            {
+                if (is_Circular == 0)
+                display_list();
+                else if (is_Circular == 1)
+                display_circular__list();
+            }
+            break;
+        case 13:
+            printf("Data at location : ");
+            scanf("%d",&location);
+            display_node(location);
+            break;
+        case 14:
+            printf("%d",list_size);
+            break;
+        case 15:
+            turn_into_circular();
+            break;
+        case 16:
+            printf("\nEnter Data to insert at head : ");
+            scanf("%d",&number);
+            add_to_list2_at_head(number);
+            break;
+        case 17:
+            printf("\nEnter Data to insert at tail : ");
+            scanf("%d",&number);
+            add_to_list2_at_tail(number);
+            break;
+        case 18:
+            concatenate();
+            break;
+	case 19:
+	    merge(Head,Head2);
+	    break;
+        default:
+            printf("\n ERROR Invalid Selection");
+        }
+    }
+}

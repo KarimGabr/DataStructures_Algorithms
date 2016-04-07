@@ -1,0 +1,34 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main()
+{
+    int array[] = {24, 5, 3, 35, 14, 23, 19};
+    int length = 7;
+
+    int i;
+    int insert;
+    int temp;
+
+    puts("Unsorted Array :");
+    for(i = 0 ; i < length ; i++)
+        printf("array[%d] = [%d]\n", i, array[i]);
+
+    for (i = 1 ; i < length ; i++)
+    {
+        insert = i;
+
+        while (insert > 0 && array[insert - 1] > array[insert])
+        {
+            temp = array[insert];
+            array[insert] = array[insert-1];
+            array[insert-1] = temp;
+            insert--;
+        }
+    }
+
+    puts("\n\nSorted Array :");
+    for(i = 0 ; i < length ; i++)
+        printf("array[%d] = [%d]\n", i, array[i]);
+}

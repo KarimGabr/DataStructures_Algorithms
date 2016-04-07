@@ -1,0 +1,152 @@
+Sheet 1 :
+---------
+Question 1 :
+-----------
+
+Merge()
+{
+
+if(B[lengthB - 1] < A[0] && B[0] < A[0])
+{
+	for(d = lengthA -1 ; d > 0 ; d--)
+		A[d + 1] = A[d]
+	for(q = 0 ; q < lengthB ; q++)
+		A[q] = B[q]
+	return
+}
+
+if(B[lengthB - 1] > A[0] && B[0] > A[0])
+{
+	q = 0
+	for(d = lengthA ; d < sizeA ; d++)
+	{
+		
+		A[d] = B[q]
+		q++
+		if(q = lengthB)	return
+	}
+}
+
+else
+{
+
+for(i = 0 ; i < lengthA ; i++)
+{
+	for(j = 0 ; j < lengthB ; j++)
+	{
+		if(B[j] < A[i])
+		{
+			hole = j
+			
+			for(k = lengthA ; k > hole ; k--)
+				A[k] = A[k-1]
+
+			A[hole] = B[j];
+		}
+	}
+}
+}
+return
+}
+
+
+--------------
+
+Question 4 : 
+-------------
+#include <iostream>
+#include <vector>
+#include <math.h>
+using namespace std;
+
+void power_set(string s)
+{
+    vector<int> v;
+	int n = s.length();
+
+	for(int i = 0; i < pow(2, n); i++)
+	{
+		int m  = i;
+
+		while(m > 1)
+        {
+			v.push_back(m%2);
+			m = m / 2;
+		}
+
+		v.push_back(m);
+
+		int k = 0;
+
+		cout << "{";
+
+		for(int k = 0; k < v.size(); ++k)
+		{
+			if(v[k])    cout << s.at(k);
+		}
+
+		cout << "}" << endl;
+		v.clear();
+	}
+
+}
+
+
+int main(void)
+{
+	power_set("abcd");
+}
+
+---------------
+
+Sheet 2 :
+--------
+Q1)DFS
+
+Q2){u,v} must be on edge in G & v is a descendant of u in T
+
+Q3)Both by using s as source and searching for t
+
+--------------
+
+Sheet 3 : 
+----------
+
+Question 1 : 
+------------
+
+** traverse the graph
+** record number of visits per vetix
+** search for vertices that has 1 visit only , the edge which connect to that vertix is a bridge
+
+------------
+
+Question 2 : 
+------------
+
+** Sort edges descending 
+** for each edge if it doesn't creat cycle add it to the tree
+** so, it isn't harder than the minimum spaning tree
+
+-------------
+
+Question 3 : 
+------------
+
+** traverse the graph
+** record number of visits foreach vertix
+** after traversing 
+** each vertix that has visits equal to |V|-1 && there is no edge from that vertix to itself its a sink
+
+-------------
+
+Question 4 : 
+------------
+
+foreach v in vertix
+dfs(v)
+if (!compare(visited,vertix))
+return notStronglyConnected
+else
+return StronglyConnected
+-------------

@@ -1,0 +1,118 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct bubble
+{int data; struct bubble * smallKID; struct bubble * bigKID;} bubble;
+
+void insert(bubble ** yourTree , int data);
+
+bubble ** retrieve (bubble ** yourTree , int value);
+
+void traversePRE(bubble ** yourTree);
+
+void traverseIN (bubble ** yourTree);
+
+void traversePOST (bubble ** yourTree);
+
+bubble * create (int data);
+
+void del (bubble ** yourTree , int value);
+
+void insert(bubble ** yourTree ,int data)
+{
+	if (!*yourTree)		*yourTree = create(data);
+	
+	else if (data < *yourTree) -> data) insert(&((*yourTree) -> smallKID) , data);
+	
+	else if (data > *yourTree) -> data) insert(&((*yourTree) -> bigKID) , data);
+}
+
+bubble * create (int data)
+{
+	bubble * x = (bubble*) malloc(sizeof(bubble));
+	x -> data = data;
+	x -> bigKID = NULL;
+	x -> smallKID = NULL;
+	return x;
+}
+
+bubble ** retrieve (bubble ** yourTree,int value)
+{
+	if (! *yourTree) return NULL;
+	
+	else if (value == (*yourTree)->data) 	return yourTree;
+	
+	else if (value < (*yourTree)->data)  	retrieve(&((*yourTree)->smallKID),value);
+	
+	else if (value > (*yourTree)->data) 	retrieve(&((*yourTree)->bigKID),value);
+}
+
+void traversePRE(bubble ** yourTree)
+{
+	if (*yourTree)	
+	{
+		printf("%d\t",(*yourTree)->data);
+		traversePRE(&(*yourTree)->smallKID);
+		traversePRE(&(*yourTree)->bigKID);
+	}
+}
+
+void traverseIN (bubble ** yourTree)
+{
+	if (*yourTree)
+	{
+		traversePRE(&(*yourTree)->smallKID);
+		printf("%d\t",(*yourTree)->data);
+		traversePRE(&(*yourTree)->bigKID);
+	}
+}
+
+void traversePOST (bubble ** yourTree)
+{
+	if (*yourTree)
+	{
+		traversePRE(&(*yourTree)->smallKID);
+		traversePRE(&(*yourTree)->bigKID);
+		printf("%d\t",(*yourTree)->data);
+	}
+}
+
+int findsmall (bubble * x)
+{
+	if (x -> smallKID) 		findsmall( x-> smallKID);
+	
+	else 	return x-> data;
+}
+
+void del (bubble ** yourTree, int value)a
+{
+	bubble ** x = retrieve(yourTree,value);
+	bubble * y = *x;
+	
+	if ( !(*x) -> bigKID  &&  !(*x) -> smallKID ) 
+	{
+		*x= NULL; 
+		free(y); 
+	}
+	
+	else if (!(*x) -> bigKID)
+	{
+		(*x) = y -> smallKID; 
+		free(y);
+	}
+	
+	else if (!(*x) -> smallKID) 
+	{
+		(*x) = y -> bigKID; 
+		free(y);
+	}
+	
+	else 
+	{
+		(*x) -> data = findsmall((*x) -> bigKID); 
+		bubble ** g = retrieve( &(*x) -> bigKID , (*x) -> data );
+		y = *g; 
+		(*g) = (*g) -> bigKID; 
+		free(y);
+	}
+}

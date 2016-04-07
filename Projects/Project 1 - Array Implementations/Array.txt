@@ -1,0 +1,824 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int element_occurence(int array[], int size, int element)
+{
+    int i = 0;
+    int counter = 0;
+
+    for(i = 0 ; i < size ; i++)
+    {
+        if(array[i] == element) counter++;
+    }
+
+    return counter;
+}
+
+int array_is_full(int array[],int size)
+{
+    int i;
+    int counter = 0;
+
+    for(i = 0 ; i< size ; i++)
+    {
+        if (array[i] != 0)
+            counter++;
+    }
+
+    if (counter == size)
+        return 1;
+    else if (counter != size)
+        return 0;
+}
+
+int array_is_empty(int array[], int size)
+{
+    int i;
+    int counter = 0;
+
+    for(i = 0 ; i< size ; i++)
+    {
+        if (array[i] == 0)
+            counter++;
+    }
+
+    if (counter == size)
+        return 1;
+    else if (counter != size)
+        return 0;
+}
+
+void insert_at_beginning (int array[] , int size , int number)
+{
+    int i = 0;
+    int temp;
+    char overwrite_data;
+
+    if (array_is_full(array,size) == 1)
+    {
+        printf("Array is Full! Do you wish to overwrite Data ?\nWARNING Data will be shifted, last element will be deleted! y/n : ");
+        r : scanf("%c",&overwrite_data);
+        char a = getchar();
+        switch(overwrite_data)
+        {
+        case 'y' :
+            for(i = 0 ; i < size ; i++)
+            {
+                temp = array[i];
+                array[i] = number;
+                number = temp;
+            }
+        puts("Inserted Successfully");
+        return;
+        case 'n' :
+            puts("Failed to insert! Memory FULL!");
+            return;
+        default:
+            puts("Invalid Input");
+            goto r;
+        }
+    }
+    else
+    {
+        while(number != 0 && i < size)
+        {
+            temp = array[i];
+            array[i] = number;
+            number = temp;
+            i++;
+        }
+        puts("Inserted Successfully");
+        return;
+    }
+}
+
+void insert_at_end(int array[] , int size , int number)
+{
+    int i = size-1;
+    int temp;
+    char overwrite_data;
+
+    if (array_is_full(array,size) == 1)
+    {
+        printf("Array is Full! Do you wish to overwrite Data? WARNING Data will be shifted, first element will be deleted! y/n : ");
+        q : scanf("%c",&overwrite_data);
+        char a = getchar();
+        switch(overwrite_data)
+        {
+        case 'y' :
+            for(i = size-1 ; i >= 0 ; i--)
+            {
+                temp = array[i];
+                array[i] = number;
+                number = temp;
+            }
+        puts("Inserted Successfully");
+        return;
+        case 'n' :
+            puts("Failed to insert! Memory FULL!");
+            return;
+        default:
+            puts("Invalid Input");
+            goto q;
+        }
+    }
+    else
+    {
+        while(number != 0 && i > -1)
+        {
+            temp = array[i];
+            array[i] = number;
+            number = temp;
+            i--;
+        }
+        puts("Inserted Successfully");
+        return;
+    }
+}
+
+void insert_at_index(int array[], int size , int number, int location)
+{
+    int i = location;
+    int temp;
+    char overwrite_data;
+    int overwrite_method;
+    char overwrite_direction;
+
+    if (array[i] != 0)
+    {
+        printf("Element Already Contain Data! Do you want to overwrite Data? y/n : ");
+        b : scanf("%c",&overwrite_data);
+        char a = getchar();
+        switch(overwrite_data)
+        {
+
+        case 'y' :
+            printf("Select Overwrite method : Overwrite(1) or OverwriteAndshift(2)? 1/2 : ");
+            scanf("%d",&overwrite_method);
+            char a = getchar();
+            switch(overwrite_method)
+            {
+            case 1 :
+                array[location] = number;
+                return;
+            case 2 :
+                printf("Select Shifting Direction : Right or Left? r/l : ");
+               k :  scanf("%c",&overwrite_direction);
+                char a = getchar();
+                switch(overwrite_direction)
+                {
+                case 'r' :
+                    while(number != 0 && i < size)
+                    {
+                        temp = array[i];
+                        array[i] = number;
+                        number = temp;
+                        i++;
+                    }
+                    puts("Inserted Successfully");
+                    return;
+                }
+                case 'l' :
+                    while(number != 0 && i > -1)
+                    {
+                        temp = array[i];
+                        array[i] = number;
+                        number = temp;
+                        i--;
+                    }
+                    puts("Inserted Successfully");
+                    return;
+                default:
+                    puts("Invalid Input");
+                    goto k;
+            }
+        case 'n' :
+            puts("Failed to insert! Memory FULL!");
+            return;
+        default:
+            puts("Invalid Input");
+            goto b;
+        }
+    }
+
+    else if (array[i] == 0)
+    {
+        array[i] = number;
+        puts("Inserted Successfully");
+        return;
+    }
+
+}
+
+void delete_with_index(int array[], int location)
+{
+    int i;
+    i = location;
+    array[i] = 0;
+    puts("Deleted Successfully");
+    return;
+}
+
+void delete_with_data(int array[], int size, int number)
+{
+    int i;
+    int number_of_element;
+    char y_n;
+
+    number_of_element = element_occurence(array,size,number);
+    
+    if(number_of_element == 0)
+    {
+        puts("ERROR Data NOT Found");
+        return;
+    }
+
+    else if (number_of_element >= 1)
+    {
+        while (i < size)
+        {
+            if(array[i] == number)
+            {
+                printf("Do you want to delete %d at index %d ? y/n", array[i], i);
+                scanf("%c",&y_n);
+                switch (y_n)
+                {
+                    case 'y':
+                        array[i] = 0;
+                        puts("Deleted Successfully");
+                        return;
+                    default:
+                        puts("Data skipped");
+                }
+            }
+            i++;
+        }    
+    }
+    
+    puts("Data NOT Found!");
+    return;
+}
+
+void display_array(int array [] , int size)
+{
+    int i;
+
+    if(array_is_empty(array,size) == 1)
+    {
+        puts("Array is Empty");
+        return;
+    }
+    else
+    {
+        for(i = 0 ; i < size ; i++)
+        printf("array[%d] = %d\n",i ,array[i]);
+        return;
+    }
+}
+
+void display_element(int array[], int location)
+{
+    printf("array[%d] = %d",location ,array[location]);
+    return;
+}
+
+void update_element(int array[], int number, int location)
+{
+    array[location] = number;
+    return;
+}
+
+void search(int array[], int size, int number)
+{
+    int i;
+
+    for(i = 0 ; i< size ; i++)
+    {
+        if (array[i] == number)
+        {
+            i = i+1;
+            printf("Data found at position %d",i);
+            return;
+        }
+    }
+
+    puts("Data NOT Found!");
+    return;
+}
+
+void sort(int array[], int size)
+{
+    int i;
+    int insert;
+    int temp;
+
+    for (i = 1 ; i < size ; i++)
+    {
+        insert = i;
+
+        while (insert > 0 && array[insert - 1] > array[insert])
+        {
+            temp = array[insert];
+            array[insert] = array[insert-1];
+            array[insert-1] = temp;
+            insert--;
+        }
+    }
+
+    puts("Sorted Successfully");
+    return;
+}
+
+void inverse(int array1[], int size)
+{
+    int i;
+    int array2[size];
+
+    for(i=0 ; i < size ; i++)
+       array2[i] = array1[size-i-1];
+
+    for(i=0 ; i < size ; i++)
+       array1[i] = array2[i];
+
+    puts("Inverted Successfully");
+    return;
+}
+
+void merge(int array1[],int array2[], int array3[], int size1, int size2)
+{
+    int i;
+    int j;
+
+    for(i = 0 ; i < size1 ; i++)
+        array3[i] = array1[i];
+
+    for(j = 0 ; j < size2 ; j++)
+    {
+        array3[i] = array2[j];
+        i++;
+    }
+
+    puts("Merged Succesfully");
+    return;
+}
+
+int intersection(int array1[],int array2[], int array3[], int size1, int size2)
+{
+    int i;
+    int j;
+    int k=0;
+
+    int size3 = 0;
+
+    for(i = 0 ; i < size1 ; i++)
+    {
+        for(j = 0 ; j < size2 ; j++)
+        {
+            if(array1[i] == array2[j])
+            {
+                size3++;
+                break;
+            }
+        }
+    }
+
+    if(size3 == 0)
+    {
+        puts("NO Common Data! Failed to create Intersection Array!");
+        return;
+    }
+
+    else
+    {
+        for(i = 0 ; i < size1 ; i++)
+        {
+            for(j = 0 ; j < size2 ; j++)
+            {
+                if(array1[i] == array2[j])
+                {
+                    array3[k] =  array1[i];
+                    k++;
+                    break;
+                }
+            }
+        }
+
+    puts("Intersection Array Created Successfully!");
+    return size3;
+    }
+}
+
+int main()
+{
+    char a;
+    int operation;
+    int choose_array;
+    int number;
+    int location;
+    int n1, n2, n3, n4;
+
+    printf("Enter Array1 size : ");
+    scanf("%d",&n1);
+    printf("Enter Array2 size : ");
+    scanf("%d",&n2);
+
+    n3 = n1 + n2;
+
+    if (n1 > n2)
+        n4 = n2;
+    else if (n2 > n1)
+        n4 = n1;
+    else if (n1 == n2 )
+        n4 = n1;
+
+    int array1[n1];
+    int array2[n2];
+    int union_array[n3];
+    int intersection_array[n4];
+
+    int i;
+    for(i = 0 ; i < n1 ; i++)
+        array1[i] = 0;
+    for(i = 0 ; i< n2 ; i++)
+        array2[i] = 0;
+    for(i = 0 ; i< n3 ; i++)
+        union_array[i] = 0;
+    for(i = 0 ; i< n4 ; i++)
+        intersection_array[i] = 0;
+
+    puts("Array Implementation Test :");
+    puts("---------------------------------\n");
+    puts("4 Arrays have been 0 Initialised : ");
+    printf("1- Array1 2- Array2 3- Union Array 4- Intersection Array\n\n");
+    puts("Select Operation :");
+    puts("1 - Insert at Beginning");
+    puts("2 - Insert at End");
+    puts("3 - Insert at Index");
+    puts("4 - Delete with Index");
+    puts("5 - Delete with Data");
+    puts("6 - Update Element");
+    puts("7 - Search for Data");
+    puts("8 - Sort Array");
+    puts("9 - Inverse Array");
+    puts("10 - Display Array");
+    puts("11 - Display Element");
+    puts("12 - Merge 2 Arrays");
+    puts("13 - Find Intersection");
+
+    while (1)
+    {
+        printf("\nSelect Operation : ");
+        scanf("%d", &operation);
+        switch (operation)
+        {
+        case 1:
+            printf("Choose an Array : ");
+            scanf("%d", &choose_array);
+            switch (choose_array)
+            {
+            case 1:
+                printf("\nEnter Data to insert at beginning : ");
+                scanf("%d",&number);
+                 a = getchar();
+                insert_at_beginning (array1 , n1 , number);
+                break;
+            case 2:
+                printf("\nEnter Data to insert at beginning : ");
+                scanf("%d",&number);
+                 a = getchar();
+                insert_at_beginning (array2 , n2 , number);
+                break;
+            case 3:
+                printf("\nEnter Data to insert at beginning : ");
+                scanf("%d",&number);
+                 a = getchar();
+                insert_at_beginning (union_array , n3 , number);
+                break;
+            case 4:
+                printf("\nEnter Data to insert at beginning : ");
+                scanf("%d",&number);
+                 a = getchar();
+                insert_at_beginning (intersection_array , n4 , number);
+                break;
+            default:
+                puts("INVALID Selection!");
+                break;
+            }
+            break;
+        case 2:
+            printf("Choose an Array : ");
+            scanf("%d", &choose_array);
+            switch (choose_array)
+            {
+            case 1:
+                printf("\nEnter Data to insert at end : ");
+                scanf("%d",&number);
+                 a = getchar();
+                insert_at_end (array1 , n1 , number);
+                break;
+            case 2:
+                printf("\nEnter Data to insert at beginning : ");
+                scanf("%d",&number);
+                 a = getchar();
+                insert_at_end (array2 , n2 , number);
+                break;
+            case 3:
+                printf("\nEnter Data to insert at beginning : ");
+                scanf("%d",&number);
+                 a = getchar();
+                insert_at_end (union_array , n3 , number);
+                break;
+            case 4:
+                printf("\nEnter Data to insert at beginning : ");
+                scanf("%d",&number);
+                 a = getchar();
+                insert_at_end (intersection_array , n4 , number);
+                break;
+            default:
+                puts("INVALID Selection!");
+                break;
+            }
+            break;
+        case 3:
+            printf("Choose an Array : ");
+            scanf("%d", &choose_array);
+             a = getchar();
+            switch (choose_array)
+            {
+            case 1:
+                printf("\nEnter Data : ");
+                scanf("%d",&number);
+                char a = getchar();
+                printf("\nEnter Location : ");
+                scanf("%d",&location);
+                 a = getchar();
+                insert_at_index(array1 , n1 , number , location);
+                break;
+            case 2:
+                printf("\nEnter Data : ");
+                scanf("%d",&number);
+                 a = getchar();
+                printf("\nEnter Location : ");
+                scanf("%d",&location);
+                 a = getchar();
+                insert_at_index(array2 , n2 , number , location);
+                break;
+            case 3:
+                printf("\nEnter Data : ");
+                scanf("%d",&number);
+                 a = getchar();
+                printf("\nEnter Location : ");
+                scanf("%d",&location);
+                 a = getchar();
+                insert_at_index(union_array , n3 , number , location);
+                break;
+            case 4:
+                printf("\nEnter Data : ");
+                scanf("%d",&number);
+                 a = getchar();
+                printf("\nEnter Location : ");
+                scanf("%d",&location);
+                 a = getchar();
+                insert_at_index(intersection_array , n4 , number , location);
+                break;
+            default:
+                puts("INVALID Selection!");
+                break;
+            }
+            break;
+        case 4:
+            printf("Choose an Array : ");
+            scanf("%d", &choose_array);
+            switch (choose_array)
+            {
+            case 1:
+                printf("\nEnter Location : ");
+                scanf("%d",&location);
+                delete_with_index(array1 , location);
+                break;
+            case 2:
+                printf("\nEnter Location : ");
+                scanf("%d",&location);
+                delete_with_index(array2 , location);
+                break;
+            case 3:
+                printf("\nEnter Location : ");
+                scanf("%d",&location);
+                delete_with_index(union_array , location);
+                break;
+            case 4:
+                printf("\nEnter Location : ");
+                scanf("%d",&location);
+                delete_with_index(intersection_array , location);
+                break;
+            default:
+                puts("INVALID Selection!");
+                break;
+            }
+            break;
+        case 5:
+            printf("Choose an Array : ");
+            scanf("%d", &choose_array);
+            switch (choose_array)
+            {
+            case 1:
+                printf("\nEnter Data : ");
+                scanf("%d",&number);
+                delete_with_data(array1 , n1 , number);
+                break;
+            case 2:
+                printf("\nEnter Data : ");
+                scanf("%d",&number);
+                delete_with_data(array2 , n2 , number);
+                break;
+            case 3:
+                printf("\nEnter Data : ");
+                scanf("%d",&number);
+                delete_with_data(union_array , n3 , number);
+                break;
+            case 4:
+                printf("\nEnter Data : ");
+                scanf("%d",&number);
+                delete_with_data(intersection_array , n4 , number);
+                break;
+            default:
+                puts("INVALID Selection!");
+                break;
+            }
+            break;
+        case 6:
+            printf("Choose an Array : ");
+            scanf("%d", &choose_array);
+            switch (choose_array)
+            {
+            case 1:
+                printf("Enter Location : ");
+                scanf("%d",&location);
+                printf("\nEnter New Data : ");
+                scanf("%d",&number);
+                update_element(array1 , number , location);
+                break;
+            case 2:
+                printf("Enter Location : ");
+                scanf("%d",&location);
+                printf("\nEnter New Data : ");
+                scanf("%d",&number);
+                update_element(array2 , number , location);
+                break;
+            case 3:
+                printf("Enter Location : ");
+                scanf("%d",&location);
+                printf("\nEnter New Data : ");
+                scanf("%d",&number);
+                update_element(union_array , number , location);
+                break;
+            case 4:
+                printf("Enter Location : ");
+                scanf("%d",&location);
+                printf("\nEnter New Data : ");
+                scanf("%d",&number);
+                update_element(intersection_array , number , location);
+                break;
+            default:
+                puts("INVALID Selection!");
+                break;
+            }
+            break;
+        case 7:
+            printf("Choose an Array : ");
+            scanf("%d", &choose_array);
+            switch (choose_array)
+            {
+            case 1:
+                printf("Enter Data to search : ");
+                scanf("%d",&number);
+                search(array1 , n1 ,number);
+                break;
+            case 2:
+                printf("Enter Data to search : ");
+                scanf("%d",&number);
+                search(array2 , n2 ,number);
+                break;
+            case 3:
+                printf("Enter Data to search : ");
+                scanf("%d",&number);
+                search(union_array , n3 ,number);
+                break;
+            case 4:
+                printf("Enter Data to search : ");
+                scanf("%d",&number);
+                search(intersection_array , n4 ,number);
+                break;
+            default:
+                puts("INVALID Selection!");
+                break;
+            }
+            break;
+        case 8:
+            printf("Choose an Array : ");
+            scanf("%d", &choose_array);
+            switch (choose_array)
+            {
+            case 1:
+                sort(array1 , n1);
+                break;
+            case 2:
+                sort(array2 , n2);
+                break;
+            case 3:
+                sort(union_array , n3);
+                break;
+            case 4:
+                sort(intersection_array , n4);
+                break;
+            default:
+                puts("INVALID Selection!");
+                break;
+            }
+            break;
+        case 9:
+            printf("Choose an Array : ");
+            scanf("%d", &choose_array);
+            switch (choose_array)
+            {
+            case 1:
+                inverse(array1 , n1);
+                break;
+            case 2:
+                inverse(array2 , n2);
+                break;
+            case 3:
+                inverse(union_array , n3);
+                break;
+            case 4:
+                inverse(intersection_array , n4);
+                break;
+            default:
+                puts("INVALID Selection!");
+                break;
+            }
+            break;
+        case 10:
+            printf("Choose an Array : ");
+            scanf("%d", &choose_array);
+            switch (choose_array)
+            {
+            case 1:
+                display_array(array1 , n1);
+                break;
+            case 2:
+                display_array(array2 , n2);
+                break;
+            case 3:
+                display_array(union_array , n3);
+                break;
+            case 4:
+                display_array(intersection_array , n4);
+                break;
+            default:
+                puts("INVALID Selection!");
+                break;
+            }
+            break;
+        case 11:
+            printf("Choose an Array : ");
+            scanf("%d", &choose_array);
+            switch (choose_array)
+            {
+            case 1:
+                printf("Data at location : ");
+                scanf("%d",&location);
+                display_element(array1 , location);
+                break;
+            case 2:
+                printf("Data at location : ");
+                scanf("%d",&location);
+                display_element(array2 , location);
+                break;
+            case 3:
+                printf("Data at location : ");
+                scanf("%d",&location);
+                display_element(union_array , location);
+                break;
+            case 4:
+                printf("Data at location : ");
+                scanf("%d",&location);
+                display_element(intersection_array , location);
+                break;
+            default:
+                puts("INVALID Selection!");
+                break;
+            }
+            break;
+        case 12:
+            merge(array1 , array2 , union_array , n1 , n2);
+            break;
+        case 13:
+            n4 = intersection(array1 , array2 , intersection_array , n1 , n2);
+            break;
+        default:
+            printf("\n ERROR Invalid Selection");
+        }
+    }
+}

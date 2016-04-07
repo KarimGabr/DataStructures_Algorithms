@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+void encrypt(char paragraph[], char encrypted_paragraph[])
+{
+    int i = 0;
+    int size;
+    char temp;
+    size = strlen(paragraph);
+
+    for(i=0;i<size;i++)
+       encrypted_paragraph[i] = paragraph[size-i-1];
+
+    encrypted_paragraph[size] = '\0';
+
+    for(i = 0 ; i<size ; i++)
+        printf("%c",encrypted_paragraph[i]);
+}
+
+void decrypt(char encrypted_paragraph[], char decrypted_paragraph[])
+{
+    int i = 0;
+    int j = 0;
+    int size;
+    char temp;
+    size = strlen(encrypted_paragraph);
+
+    for(i=0;i<size;i++)
+       decrypted_paragraph[i] = encrypted_paragraph[size-i-1];
+
+    decrypted_paragraph[size] = '\0';
+
+    for(i = 0 ; i < size ; i++)
+        printf("%c",decrypted_paragraph[i]);
+}
+
+int main ()
+{
+    char path[1000] ;
+    printf("Enter Path : ");
+    gets(path);
+    FILE *pFILE;
+    char paragraph[1000];
+    char encrypted_paragraph[1000];
+    char decrypted_paragraph[1000];
+
+    pFILE = fopen(path,"r");
+
+    if (pFILE != NULL)
+    {
+        while(!(feof(pFILE)))
+        {
+            fgets(paragraph,1000,pFILE);
+            puts("Original File : ");
+            printf("%s\n",paragraph);
+        }
+    }
+
+    printf("\nEncrypted File : \n");
+    encrypt(paragraph,encrypted_paragraph);
+    printf("\n\nDecrypted File : \n");
+    decrypt(encrypted_paragraph,decrypted_paragraph);
+
+}

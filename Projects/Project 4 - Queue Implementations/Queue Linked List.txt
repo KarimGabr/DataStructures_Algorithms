@@ -1,0 +1,109 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct Node { int Data ; struct Node* Next ; } *Front , *Rear;
+int counter = 0;
+
+void enqueue(int number)
+{
+	struct Node *temp;
+	temp = (struct Node *)malloc(sizeof(struct Node));
+	temp -> Data = number;
+
+	if (Front == NULL)
+	{
+		Front = temp;
+		Front -> Next = NULL;
+		Rear = Front;
+		printf("Enqueued Successfully!");
+	}
+
+	else
+	{
+		Rear -> Next = temp;
+		Rear = temp;
+		Rear -> Next = NULL;
+		printf("Enqueued Successfully!");
+	}
+
+	counter++;
+}
+
+void dequeue()
+{
+	struct Node *temp;
+	temp = Front;
+
+	if (Front == NULL)    puts("ERROR Queue is EMPTY!");
+
+	else
+	{
+		Front = temp -> Next;
+		free(temp);
+		printf("Dequeued Successfully!");
+	}
+
+	counter--;
+}
+
+void display()
+{
+    struct Node *current_pointer;
+    current_pointer = Front;
+
+    if (current_pointer == NULL)    puts("ERROR Queue is EMPTY!");
+
+    else
+    {
+        printf("(Front)");
+        while (current_pointer != NULL)
+        {
+            if (current_pointer -> Next == NULL)    printf("(Rear)");
+            printf("%d -> %d\n", current_pointer, current_pointer -> Data);
+            current_pointer = current_pointer -> Next;
+        }
+    }
+}
+
+int main()
+{
+    int number;
+
+	int operation;
+
+	puts("Queue Implementation Test :");
+    puts("---------------------------------\n");
+    puts("Select Operation :");
+    puts("1 - Enqueue");
+    puts("2 - Dequeue");
+    puts("3 - Display");
+    puts("4 - Retrieve Queue Used Size");
+
+    while (1)
+    {
+        printf("\nSelect Operation : ");
+        scanf("%d", &operation);
+        switch (operation)
+        {
+        case 1:
+        	printf("Enter Number to Enqueue : ");
+        	scanf("%d",&number);
+        	enqueue(number);
+        	break;
+        case 2:
+        	dequeue();
+        	break;
+        case 3:
+        	display();
+        	break;
+        case 4:
+        	printf("Used Size in Queue = %d\n", counter);
+        	break;
+        default:
+        	puts("ERROR Invalid Operation!");
+        	break;
+        }
+    }
+
+}

@@ -1,0 +1,279 @@
+int struct term {int row , column , value} terrm1, terrm2;
+
+int bigger;
+
+void store_coordinate( int array[][] , int n , int m , term t[100])
+{
+	int i , j , k = 1;
+	
+	for (i = 0 ; i < n ; i++)
+	{
+		for (j = 0 ; j < m ; j++)
+		{
+			if (array[i][j] != 0)
+			{
+				t[k].row = i;
+				t[k].column = j;
+				t[k].value = array[i][j];
+				k++;
+			}
+		}
+	}
+
+	t[0].row = n;
+	t[0].column = m;
+	t[0].value = k;
+}
+
+void display(int array[][], int n , int m)
+{
+	for (int i = 0 ; i < n ; i++)
+	{
+		for (int j = 0 ; j < m ; j++)
+		{
+			printf("%d",array[i][j]);
+		}
+	}
+
+	puts("\n");
+}
+
+void display_coordinate(int array[][], int n , int m , term t)
+{
+	int k = 0;
+	puts("Sparse Matrix stored using coordiante method :");
+	
+	printf("%d",t[k].row);
+	printf("(total rows)\t");
+	for (k = 1; k < n; k++)
+		printf("%d",t[k].row);
+	puts("");
+
+	k = 0;
+	printf("%d",t[k].column);
+	printf("(total columns)\t");
+	for (k = 1; k < n; k++)
+		printf("%d",t[k].column);
+	puts("");
+
+	printf("%d",t[k].value);
+	printf("(total rows)\t");
+	for (k = 1; k < n; k++)
+		printf("%d",t[k].value);
+	puts("");
+}
+
+int retrieve_using_index(int row_index , int column_index , term t)
+{
+	for (int k = 1 ; k <= t[0].value ; k++)
+		if(t[k].row == row_index && t[k].column == column_index)	return t[k].value;
+	return 0;
+}
+
+void retrieve_using_data(int number , term t)
+{
+	for (int k = 1 ; k <= t[0].value ; k++)
+	{
+		if(t[k].value == value)
+		{
+			printf("Data Found at Row : %d -  Column : %d\n",t[k].row,t[k].column);
+			return;
+		}
+	}
+	
+	puts("ERROR Element NOT Found!");	
+}
+
+void transpose(int array[][] , term t)
+{
+	for (int k = 1 ; k <= t[0].value ; k++)
+	{
+		temp = t[k].column;
+		t[k].column = t[k].row;
+		t[k].row = temp;
+	}
+
+	puts("Transposed Successfully!");
+}
+
+void add_matrices(int array1[][], int n1 , int m1 , term t1 , int array2[][], int n2 , int m2 , term t2)
+{
+	int flag;
+
+	if(t1[0].value < t2[0].value)
+	{
+		bigger = 1;
+		for (int k = 1 ; k <= t1[0].value  ; k++)
+		{
+			for(int k = 1 ; k <= t2[0].value  ; k++)
+			{
+				if(t1[k].row == t2[l].row && t1[k].column == t2[l].column)
+				{
+					t1[k].value = t1[k].value + t2[l].value;
+					flag = 1;
+					break;
+				}
+			}
+		
+			if(flag != 1)
+			{
+				t1[k].row =	t2[k].row;
+				t1[k].column =	t2[k].column;
+				t1[k].value =	t2[k].value;
+				t1[0].row++;
+				t1[0].column++;
+				t1[0].value++;
+			}
+		}
+	}
+
+	else if(t2[0].value < t1[0].value)
+	{
+		bigger = 2;
+
+		for (int k = 1 ; k <= t2[0].value  ; k++)
+		{
+			for(int k = 1 ; k <= t1[0].value  ; k++)
+			{
+				if(t2[k].row == t1[l].row && t2[k].column == t1[l].column)
+				{
+					t2[k].value = t2[k].value + t1[l].value;
+					flag = 1;
+					break;
+				}
+			}
+		
+			if(flag != 1)
+			{
+				t2[k].row =	t1[k].row;
+				t2[k].column =	t1[k].column;
+				t2[k].value =	t1[k].value;
+				t2[0].row++;
+				t2[0].column++;
+				t2[0].value++;
+			}
+		}
+	}
+}
+
+void display_addition()
+{
+	if(bigger == 1)
+	{
+		int k = 0;
+		puts("Result Adding 2 Matrices stored using coordiante method :");
+	
+		printf("%d",t1[k].row);
+		printf("(total rows)\t");
+		for (k = 1; k < n; k++)
+			printf("%d",t1[k].row);
+		puts("");
+
+		k = 0;
+		printf("%d",t1[k].column);
+		printf("(total columns)\t");
+		for (k = 1; k < n; k++)
+			printf("%d",t1[k].column);
+		puts("");
+
+		printf("%d",t1[k].value);
+		printf("(total rows)\t");
+		for (k = 1; k < n; k++)
+			printf("%d",t1[k].value);
+		puts("");
+	}
+
+	if(bigger == 2)
+	{
+		int k = 0;
+		puts("Result Adding 2 Matrices stored using coordiante method :");
+	
+		printf("%d",t2[k].row);
+		printf("(total rows)\t");
+		for (k = 1; k < n; k++)
+			printf("%d",t2[k].row);
+		puts("");
+
+		k = 0;
+		printf("%d",t2[k].column);
+		printf("(total columns)\t");
+		for (k = 1; k < n; k++)
+			printf("%d",t2[k].column);
+		puts("");
+
+		printf("%d",t2[k].value);
+		printf("(total rows)\t");
+		for (k = 1; k < n; k++)
+			printf("%d",t2[k].value);
+		puts("");
+	}
+}
+
+int main()
+{
+	int operation;
+	
+	int number;
+	
+	int row_index , column_index ;
+
+	puts("Sparse Matrix Coordinate Method Test :");
+    puts("--------------------------------------\n");
+
+    printf("Enter Matrix1 size (array,column) : ");
+    scanf("%d %d", &n1 , &m1);
+
+	printf("Enter Matrix2 size (array,column) : ");
+    scanf("%d %d", &n2 , &m2);
+
+    int Matrix1[n1][m1];
+    int Matrix2[n2][m2];
+
+    puts("Matrix 1 :");
+    display(Matrix1 , n1 , m1);
+
+    puts("Matrix 2 :");
+    display(Matrix2 , n2 , m2);
+
+    store_coordinate(Matrix1 , n1 , m1 , terrm1);
+    
+    store_coordinate(Matrix2 , n2 , m2 , terrm2);
+
+    puts("Matrix 1 :");
+    display_coordinate(Matrix1 , n1 , m1 , terrm1);
+
+	puts("Matrix 2 :");
+    display_coordinate(Matrix2 , n2 , m2 , terrm2);
+
+    add_matrices (Matrix1 , n1 , m1 , terrm1 , Matrix2 , n2 , m2 , terrm2);
+    display_addition (Matrix1 , n1 , m1 , terrm1 , Matrix2 , n2 , m2 , terrm2);
+
+    puts("Select Operation on Matrix1 :");
+    puts("1 - Transpose Matrix");
+    puts("2 - Retrieve using index");
+    puts("3 - Retrieve using data");
+
+    while (1)
+    {
+        printf("\nSelect Operation : ");
+        scanf("%d", &operation);
+        switch (operation)
+        {
+        case 1:
+            transpose(Matrix1 , terrm1);
+            break;
+        case 2:
+            printf("Enter Row and Column indices : ");
+    		scanf("%d %d", &row_index , &column_index);
+            retrieve_using_index(row_index , column_index , terrm1);
+            break;
+        case 3:
+            printf("Enter Number to Search : ");
+    		scanf("%d", &number);
+            retrieve_using_data(number , terrm1);
+            break;
+        default:
+            printf("\n ERROR Invalid Selection");
+    	}
+    }
+}

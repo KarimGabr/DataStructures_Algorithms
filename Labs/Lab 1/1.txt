@@ -1,0 +1,125 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    int x;
+    int counter = 0;
+    int _50counter = 0;
+    int _20counter = 0;
+    int _10counter = 0;
+    int _5counter = 0;
+    int _1counter = 0;
+    int maximum = 50;
+    printf("Enter amount of money : ");
+    scanf("%d",&x);
+    while(1)
+    {
+        if(maximum = 50)
+        {
+            x-= 50;
+            if(x == 0)
+            {
+                counter++;
+                _50counter++;
+                break;
+            }
+            else if(x > 0)
+            {
+                counter++;
+                _50counter++;
+                continue;
+            }
+            else if(x < 0)
+            {
+                x+= 50;
+                maximum = 20;
+            }
+        }
+        else if(maximum = 20)
+        {
+            x-= 20;
+            if(x == 0)
+            {
+                counter++;
+                _20counter++;
+                break;
+            }
+            else if(x > 0)
+            {
+                counter++;
+                _20counter++;
+                continue;
+            }
+            else if(x < 0)
+            {
+                x+= 20;
+                maximum = 10;
+            }
+        }
+        else if(maximum = 10)
+        {
+            x-= 10;
+            if(x == 0)
+            {
+                counter++;
+                _10counter++;
+                break;
+            }
+            else if(x > 0)
+            {
+                counter++;
+                _10counter++;
+                continue;
+            }
+            else if(x < 0)
+            {
+                x+= 10;
+                maximum = 5;
+            }
+        }
+        if(maximum = 5)
+        {
+            x-= 5;
+            if(x == 0)
+            {
+                counter++;
+                _5counter++;
+                break;
+            }
+            else if(x > 0)
+            {
+                counter++;
+                _5counter++;
+                continue;
+            }
+            else if(x < 0)
+            {
+                x+= 5;
+                maximum = 1;
+            }
+        }
+        if(maximum = 1)
+        {
+            x-= 1;
+            if(x == 0)
+            {
+                counter++;
+                _1counter++;
+                break;
+            }
+            else if(x > 0)
+            {
+                counter++;
+                _1counter++;
+                continue;
+            }
+        }
+    }
+    printf("\nMinimum number of notes : %d\n",counter);
+    printf("Number of 50 notes : %d\n",_50counter);
+    printf("Number of 20 notes : %d\n",_20counter);
+    printf("Number of 10 notes : %d\n",_10counter);
+    printf("Number of 5 notes : %d\n",_5counter);
+    printf("Number of 1 notes : %d\n",_1counter);
+}

@@ -1,0 +1,78 @@
+# depslib dependency file v1.0
+1401407725 source:c:\users\karem\desktop\treety\main.c
+	<stdio.h>
+	<stdlib.h>
+	"Tree.h"
+
+1401355860 c:\users\karem\desktop\treety\tree.h
+	<stdio.h>
+	<stdlib.h>
+
+1401387135 source:c:\users\karem\desktop\treety\tree.c
+	<stdio.h>
+	<stdlib.h>
+	"Tree.h"
+
+1401469434 source:d:\treety\main.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	"Tree.h"
+
+1401469660 d:\treety\tree.h
+	<stdio.h>
+	<stdlib.h>
+
+1401469742 source:d:\treety\tree.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Tree.h"
+
+1401460142 source:h:\treety\tree.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Tree.h"
+
+1401452696 h:\treety\tree.h
+	<stdio.h>
+	<stdlib.h>
+
+1401459838 source:h:\treety\main.c
+	<stdio.h>
+	<stdlib.h>
+	"Tree.h"
+
+1401514127 source:c:\users\mohamed\desktop\treety\main.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	"Tree.h"
+
+1401469660 c:\users\mohamed\desktop\treety\tree.h
+	<stdio.h>
+	<stdlib.h>
+
+1401492709 source:c:\users\mohamed\desktop\treety\tree.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Tree.h"
+
+1401612981 source:c:\users\karem\desktop\gamepad\treety\tree.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Tree.h"
+
+1401612574 c:\users\karem\desktop\gamepad\treety\tree.h
+	<stdio.h>
+	<stdlib.h>
+
+1401613147 source:c:\users\karem\desktop\gamepad\treety\main.c
+	<stdio.h>
+	<stdlib.h>
+	<math.h>
+	"Tree.h"
+

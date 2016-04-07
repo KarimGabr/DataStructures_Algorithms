@@ -1,0 +1,78 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct Node{int Data;struct Node *left_child , *right_child;} ;
+
+void inorder_traverse(struct Node *Tree)
+{
+	if (Tree)
+	{
+		inorder_traverse(Tree -> left_child);
+		printf("%d\t", Tree -> Data);
+		inorder_traverse(Tree -> right_child);
+	}
+}
+void CreateBubble(int Data,struct Node* Tree)
+{
+
+	Tree->Data = Data;
+	Tree->right_child = NULL;
+	Tree->left_child = NULL;
+
+}
+void insert (int Data ,struct Node * Tree)
+{
+
+	if (Tree==NULL)
+	{
+        Tree = (struct Node *) malloc(sizeof(struct Node));
+        CreateBubble(Data,Tree);
+	}
+	else if (Data<Tree->Data)
+	{
+		insert (Data,Tree->left_child);
+	}
+	else if (Data>Tree->Data)
+	{
+
+		insert (Data,Tree->right_child);
+	}
+}
+void preorder_traverse(struct Node *Tree)
+{
+	if (Tree)
+	{
+		printf("%d\t", Tree -> Data);
+		preorder_traverse(Tree -> left_child);
+		preorder_traverse(Tree -> right_child);
+	}
+}
+
+void postorder_traverse(struct Node *Tree)
+{
+	if (Tree)
+	{
+		postorder_traverse(Tree -> left_child);
+		postorder_traverse(Tree -> right_child);
+		printf("%d\t", Tree -> Data);
+	}
+}
+
+
+
+int main()
+{
+	struct Node *Tree = NULL;
+	 insert(5 , Tree);
+	insert(7 , Tree);
+	insert(13 , Tree);
+	insert(1 , Tree);
+	insert(6 , Tree);
+	insert(2 , Tree);
+	inorder_traverse(Tree);
+	puts("");
+	preorder_traverse(Tree);
+	puts("");
+	postorder_traverse(Tree);
+}

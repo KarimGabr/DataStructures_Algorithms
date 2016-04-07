@@ -1,0 +1,121 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct Node {int Data;struct Node *Next;}  *current_pointer, *temp;
+struct Node *Head  = NULL;
+
+int stack_size = 0;
+
+void push(int number)
+{
+    temp = (struct Node*)malloc(sizeof(struct Node));
+    temp -> Data = number;
+    if (Head == NULL)
+    {
+        Head = temp;
+        Head -> Next = NULL;
+        puts("Pushed Successfully");
+    }
+
+    else
+    {
+        temp -> Next = Head;
+        Head = temp;
+        puts("Pushed Successfully");
+    }
+    stack_size++;
+}
+
+void pop()
+{
+    if(stack_size > 0)
+    {
+        stack_size--;
+
+        current_pointer = Head;
+
+        printf("%d ",current_pointer -> Data);
+
+        if (stack_size == 0)
+        {
+            free(current_pointer);
+            Head = NULL;
+            puts("Popped Successfully");
+            puts("List is now EMPTY");
+        }
+
+        else
+        {
+            Head = current_pointer -> Next;
+            free(current_pointer);
+            puts("Popped Successfully");
+        }
+    }
+
+    else puts("Stack is Empty!");
+}
+
+void display_stack()
+{
+    current_pointer = Head;
+
+    if (current_pointer == NULL || stack_size == 0) puts("Stack is EMPTY");
+
+    else
+    {
+        puts("|  |");
+        puts("---");
+        puts(" | ");
+        puts("---\n");
+        for(current_pointer = Head ; current_pointer != NULL ; current_pointer = current_pointer -> Next)
+        {
+            printf("|%d|\n", current_pointer -> Data);
+            puts("---");
+            puts(" | ");
+            puts("---");
+        }
+        puts(" | ");
+        puts("===");
+        puts("===");
+    }
+}
+
+int main()
+{
+    int operation;
+    int number;
+
+    puts("Stack Implementation using Linked List Test :");
+    puts("---------------------------------\n");
+    puts("Select Operation :");
+    puts("1 - Push");
+    puts("2 - Pop");
+    puts("3 - Display");
+    puts("4 - Retrieve Stack Size");
+
+    while (1)
+    {
+        printf("\nSelect Operation : ");
+        scanf("%d", &operation);
+        switch (operation)
+        {
+        case 1:
+            printf("Enter Number to push : ");
+            scanf("%d",&number);
+            push(number);
+            break;
+        case 2:
+            pop();
+            break;
+        case 3:
+            display_stack();
+            break;
+        case 4:
+            printf("Stack Size = %d",stack_size);
+            break;
+        default:
+            printf("\n ERROR Invalid Selection");
+        }
+    }
+}
